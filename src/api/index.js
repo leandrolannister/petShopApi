@@ -5,8 +5,8 @@ const config = require('./config/default.json');
 
 app.use(bodyParse.json({extends:true}));
 
-app.get('/', (req,res) => {
-    res.send('Welcome to NodeJs');
-});
+const fornecedor = require('../api/rotas/fornecedores');
+app.use('/api/fornecedores', fornecedor);
+
 
 app.listen(config.api.port, () => console.log('Server running at 3000'));
