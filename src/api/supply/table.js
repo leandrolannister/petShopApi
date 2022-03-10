@@ -1,4 +1,4 @@
-const Model = require('./Model.js');
+const Model = require('./model.js');
  
 module.exports = {
     listar(){

@@ -1,5 +1,5 @@
 const routes = require('express').Router();
-const fornecedores = require('./Table.js');
+const fornecedores = require('./table.js');
 
 routes.get('/', async (req,res) => {
     const result = await fornecedores.listar();

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const instancy = require('../../infra/instancy.js');
+const instancy = require('../infra/instancy.js');
 
 const columns = {
     empresa:{
