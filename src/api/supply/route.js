@@ -1,8 +1,9 @@
-const routes = require('express').Router();
-const supply = require('./table.js');
+const route = require('express').Router();
+const table = require('./table.js');
+const Supply = require('./Supply.js');
 
-routes.get('/', async (req,res) => {
-    const result = await supply.listar();
+route.get('/', async (req,res) => {
+    const result = await table.listar();
     try{
         res.status(200).json(result);
     }catch(error){
@@ -10,7 +11,19 @@ routes.get('/', async (req,res) => {
     }    
 });
 
-module.exports = routes;
+route.post('/', async (req,res) => {
+   const supply = new Supply(req.body);
+   
+   try{
+       await supply.store();
+       res.status(200).json('success');
+   }catch(error){
+       res.status(201).json(`Error:${error}`);
+   }
+
+});
+
+module.exports = route;
 
 
 
