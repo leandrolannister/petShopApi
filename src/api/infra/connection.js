@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const config = require('../config/default.json');
 
-const instancy = new Sequelize(
+const connection = new Sequelize(
     config.mysql.database,
     config.mysql.user,
     config.mysql.password,
@@ -11,4 +11,4 @@ const instancy = new Sequelize(
     }    
 );
 
-module.exports = instancy;
+module.exports = connection;

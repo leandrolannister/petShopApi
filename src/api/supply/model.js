@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const instancy = require('../infra/instancy.js');
+const connection = require('../infra/connection.js');
 
 const columns = {
     empresa:{
@@ -25,4 +25,4 @@ const options = {
     version: 'versao'
 }
 
-module.exports = instancy.define('fornecedor',columns,options);
+module.exports = connection.define('fornecedor',columns,options);
