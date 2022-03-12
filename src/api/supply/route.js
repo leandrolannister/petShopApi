@@ -22,6 +22,24 @@ route.post('/', async (req,res) => {
    }
 });
 
+route.get('/:id', async (req,res) => {
+    try{
+       const {id} = req.params;
+       const supply = new Supply({id: id});
+       const data = await supply.show();
+
+       res.status(200).json({
+          'data':data,
+          'status':"200"
+       });
+
+    }catch(error){
+        res.status(201).json({'message': error.message});
+        handleError(error);
+    }
+
+});
+
 function handleError(error){
     throw new Error(error);
 }

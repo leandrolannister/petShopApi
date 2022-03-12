@@ -27,6 +27,18 @@ class Supply {
    static async listar(){
        return table.listar();
    }
+
+   async show(){
+       const supply = await table.show(this.id);
+       this.empresa = supply.empresa;
+       this.email = supply.email;
+       this.categoria = supply.categoria;
+       this.dataCriacao = supply.dataCriacao;
+       this.dataAtualizacao = supply.dataAtualizacao;
+       this.versao = supply.versao;
+       
+       return supply;
+   }
 }
 
 module.exports = Supply;
