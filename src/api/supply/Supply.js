@@ -23,6 +23,10 @@ class Supply {
        this.dataAtualizacao = store.dataAtualizacao;
        this.versao = store.versao;      
    }
+
+   static async listar(){
+       return table.listar();
+   }
 }
 
 module.exports = Supply;

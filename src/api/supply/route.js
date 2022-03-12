@@ -1,27 +1,30 @@
 const route = require('express').Router();
-const table = require('./table.js');
 const Supply = require('./Supply.js');
 
-route.get('/', async (req,res) => {
-    const result = await table.listar();
+route.get('/', async (req,res) => {    
     try{
-        res.status(200).json(result);
+        const supplies = await Supply.listar();
+        res.status(200).json({'data':supplies,'status':200});
     }catch(error){
-        res.status(400).json(error);
+        res.status(200).json({'message':'not content','status':201});
+        handleError(error);
     }    
 });
 
 route.post('/', async (req,res) => {
-   const supply = new Supply(req.body);
-   
    try{
+       const supply = new Supply(req.body);
        await supply.store();
-       res.status(200).json('success');
+       res.status(200).json({'message':'Record successfully','status':200});
    }catch(error){
-       res.status(201).json(`Error:${error}`);
+       res.status(200).json({'message':'not content','status':201});
+       handleError(error);
    }
-
 });
+
+function handleError(error){
+    throw new Error(error);
+}
 
 module.exports = route;
 
