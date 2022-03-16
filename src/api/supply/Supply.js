@@ -25,7 +25,7 @@ class Supply {
    }
 
    static async listar(){
-       return table.listar();
+       return await table.listar();
    }
 
    async show(){
@@ -38,6 +38,25 @@ class Supply {
        this.versao = supply.versao;
        
        return supply;
+   }
+
+   async update(){
+       await table.show(this.id);
+       const fields = ['empresa','email','categoria'];
+       const data = {};
+
+       for(let row in fields){
+           const value = this[fields[row]];
+
+           if (typeof value === 'string' && value.length > 0){
+               data[fields[row]] = value;
+           }
+       }
+
+       if (Object.keys(data).length === 0)
+         throw new Error('Obejct is empty');
+
+       await table.update(this.id,data);       
    }
 }
 

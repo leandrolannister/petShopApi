@@ -18,5 +18,13 @@ module.exports = {
          throw new Error('Supply was not found');
 
        return supply;  
+    },
+    async update(id,data){
+        return await Model.update(
+            data,
+            {
+                where:{id:id}
+            }
+        );
     }
 }
