@@ -17,7 +17,10 @@ route.post('/', async (req,res) => {
        await supply.store();
        res.status(201).json({'message':'Created','status':201});
    }catch(error){
-       res.status(204).json({'message':'not content','status':204});
+      res.send(
+         JSON.stringify({'status':204,message:error.message})
+      );
+       
        handleError(error);
    }
 });
