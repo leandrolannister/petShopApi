@@ -58,6 +58,10 @@ class Supply {
 
        await table.update(this.id,data);       
    }
+
+   async delete(){
+       return await table.destroy(this.id);
+   }
 }
 
 module.exports = Supply;
