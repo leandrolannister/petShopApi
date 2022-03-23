@@ -3,10 +3,11 @@ const Supply = require('./Supply.js');
 
 route.get('/', async (req,res) => {    
     try{
-        const supplies = await Supply.listar();
-        res.status(200).json({'data':supplies,'status':200});
+        res.status(200).json({'data': await Supply.listar(),'status':200});
     }catch(error){
-        res.status(204).json({'message':'not content','status':204});
+        res.send(
+            JSON.stringify({'error':error.message})
+        );        
         handleError(error);
     }    
 });
@@ -19,8 +20,7 @@ route.post('/', async (req,res) => {
    }catch(error){
       res.send(
          JSON.stringify({'status':204,message:error.message})
-      );
-       
+      );       
        handleError(error);
    }
 });
@@ -37,7 +37,9 @@ route.get('/:id', async (req,res) => {
        });
 
     }catch(error){
-        res.status(404).json({'message': error.message});
+        res.send(
+            JSON.stringify({'error':error.message})
+        );
         handleError(error);
     }
 });
@@ -50,20 +52,24 @@ route.put('/:id', async (req,res) => {
       await supply.update();
       res.end();
     }catch(error){
-      res.status(204).json({'status':'not content','message':error});
+      res.send(
+        JSON.stringify({'error':error.message})
+      );
       handleError(error);    
     }
 });
 
 route.delete('/:id', async (req,res) => {
     try{
-        const supply = new Supply({id:req.params.id});
-        await supply.show();
-        await supply.delete();
-        res.end();
+      const supply = new Supply({id:req.params.id});
+      await supply.show();
+      await supply.delete();
+      res.end();
     }catch(error){
-        res.json({'status':404, 'message':error.message});       
-        handleError(error);
+      res.send(
+        JSON.stringify({'error':error.message})
+      );      
+      handleError(error);
     }
 });
 
