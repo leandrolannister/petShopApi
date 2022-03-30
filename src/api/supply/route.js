@@ -49,6 +49,7 @@ route.put('/:id', async (req,res) => {
       const {id} = req.params;
       const data = Object.assign({},req.body,{id:id});
       const supply = new Supply(data);
+      await supply.show();
       await supply.update();
       res.end();
     }catch(error){
