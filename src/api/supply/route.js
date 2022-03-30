@@ -1,4 +1,5 @@
 const route = require('express').Router();
+const NaoEncontrado = require('../config/NaoEncontrado.js');
 const Supply = require('./Supply.js');
 
 route.get('/', async (req,res) => {    
@@ -49,12 +50,12 @@ route.put('/:id', async (req,res) => {
       const {id} = req.params;
       const data = Object.assign({},req.body,{id:id});
       const supply = new Supply(data);
-      await supply.show();
       await supply.update();
-      res.end();
+      res.status('200').json({'message':'ok'});
     }catch(error){
+      (error instanceof NaoEncontrado) ? res.status(404) : res.status(400);
       res.send(
-        JSON.stringify({'error':error.message})
+        JSON.stringify({'message':error.message,'id':error.idErro})
       );
       handleError(error);    
     }

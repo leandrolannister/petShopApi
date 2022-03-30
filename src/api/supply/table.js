@@ -1,4 +1,5 @@
 const Model = require('./model.js');
+const NaoEncontrado = require('../config/NaoEncontrado.js');
  
 module.exports = {
     listar(){
@@ -15,7 +16,7 @@ module.exports = {
        });
        
        if (!supply)
-         throw new Error('Supply was not found');
+         throw new NaoEncontrado();
 
        return supply;  
     },
