@@ -1,5 +1,4 @@
 const route = require('express').Router();
-const NaoEncontrado = require('../config/NaoEncontrado.js');
 const Supply = require('./Supply.js');
 
 route.get('/', async (req,res) => {    
@@ -51,7 +50,8 @@ route.put('/:id', async (req,res, next) => {
       const data = Object.assign({},req.body,{id:id});
       const supply = new Supply(data);
       await supply.update();
-      res.status('200').json({'message':'ok'});
+      res.status('200');
+      res.end();
     }catch(error){
       next(error);      
     }
