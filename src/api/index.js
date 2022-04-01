@@ -10,8 +10,7 @@ app.use('/api/supply', supply);
 app.use((error,req,res,next) => {
   (error instanceof NotFound) ? res.status(404) : res.status(400);
   
-  res.send(JSON.stringify({'message':error.message,'id':error.idError}));
-  handleError(error);    
+  res.send(JSON.stringify({'message':error.message,'id':error.idError}));  
 
 });
 

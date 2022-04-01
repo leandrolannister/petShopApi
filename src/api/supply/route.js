@@ -1,15 +1,13 @@
 const route = require('express').Router();
 const Supply = require('./Supply.js');
 
-route.get('/', async (req,res) => {    
-    try{
-        res.status(200).json({'data': await Supply.listar(),'status':200});
-    }catch(error){
-        res.send(
-            JSON.stringify({'error':error.message})
-        );        
-        handleError(error);
-    }    
+route.get('/', async (req,res,next) => {    
+  try{
+    res.status(200).json(await Supply.listar());
+  }catch(error){
+    next(error);
+    handleError(error);
+  }    
 });
 
 route.post('/', async (req,res) => {
@@ -54,6 +52,7 @@ route.put('/:id', async (req,res, next) => {
       res.end();
     }catch(error){
       next(error);      
+      handleError(error);
     }
 });
 
