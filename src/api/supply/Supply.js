@@ -1,3 +1,4 @@
+const WrongFields = require('../error/WrongFields.js');
 const table = require('./table.js');
 
 class Supply {
@@ -18,7 +19,6 @@ class Supply {
            email: this.email,
            categoria: this.categoria
        });
-
        this.id = store.id;
        this.dataCriacao = store.dataCriacao;
        this.dataAtualizacao = store.dataAtualizacao;
@@ -52,7 +52,7 @@ class Supply {
        if (typeof value == 'string' && value.length > 0){
          data[fields[row]] = value;
        }else{
-         throw new Error(`O campo ${fields[row]} não possui valor`);  
+         throw new WrongFields(`O campo ${fields[row]} não possui valor`);  
        }
      }
 
@@ -71,12 +71,13 @@ class Supply {
      
      for (let i in fields){
        let value = this[fields[i]];
+       
        if (typeof value != 'string' || value.length <= 0){            
          let message = `O campo ${fields[i]} não possui valor`;  
-         throw new Error(message);
+         throw new WrongFields(message);        
        }
      }
-    }
+   }
     
 }
 

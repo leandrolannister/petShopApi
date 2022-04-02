@@ -2,14 +2,22 @@ const app = require('express')();
 const bodyParse = require('body-parser');
 const supply = require('./supply/route');
 const config = require('./config/default.json');
-const NotFound = require('./error/NotFound.js')
+const NotFound = require('./error/NotFound.js');
+const WrongFields = require('./error/WrongFields');
 
 app.use(bodyParse.json());
 app.use('/api/supply', supply);
 
 app.use((error,req,res,next) => {
-  (error instanceof NotFound) ? res.status(404) : res.status(400);
-  
+  let status = 500;
+
+  if (error instanceof NotFound) 
+    status = 404;  
+
+  if (error instanceof WrongFields)
+    status = 400;
+    
+  res.status(status);
   res.send(JSON.stringify({'message':error.message,'id':error.idError}));  
 
 });

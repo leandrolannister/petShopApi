@@ -64,7 +64,3 @@ function handleError(error){
 }
 
 module.exports = route;
-
-
-
-
