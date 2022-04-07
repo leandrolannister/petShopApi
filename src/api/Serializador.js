@@ -16,4 +16,7 @@ class Serializador{
     }
 }
 
-module.exports = Serializador;
+module.exports = {
+    Serializador: Serializador,
+    acceptHeader: ['application/json']
+}

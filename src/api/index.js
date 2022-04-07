@@ -5,8 +5,23 @@ const config = require('./config/default.json');
 const NotFound = require('./error/NotFound.js');
 const WrongFields = require('./error/WrongFields');
 const NotAccetable = require('./error/NotAccetable');
+const acceptHeader = require('./Serializador').acceptHeader;
 
 app.use(bodyParse.json());
+
+app.use((req,res,next) => {
+  let header = req.header('Accept');
+  
+  if (header == '*/*')
+     header = 'application/json';
+  
+  if (acceptHeader.indexOf(header) == -1)
+    res.status(406).end();       
+  
+  res.setHeader('Content-Type', header);
+  next();
+});
+
 app.use('/api/supply', supply);
 
 app.use((error,req,res,next) => {
