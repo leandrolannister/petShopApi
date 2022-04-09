@@ -5,7 +5,7 @@ const config = require('./config/default.json');
 const NotFound = require('./error/NotFound.js');
 const WrongFields = require('./error/WrongFields');
 const NotAccetable = require('./error/NotAccetable');
-const acceptHeader = require('./Serializador').acceptHeader;
+const acceptHeader = require('./Serializar/Serializer').acceptHeader;
 
 app.use(bodyParse.json());
 
@@ -16,7 +16,7 @@ app.use((req,res,next) => {
      header = 'application/json';
   
   if (acceptHeader.indexOf(header) == -1)
-    res.status(406).end();       
+    throw new NotAccetable(`Tipo ${header} não permitido`);      
   
   res.setHeader('Content-Type', header);
   next();

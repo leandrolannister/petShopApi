@@ -1,14 +1,15 @@
-const NotAccetable = require("./error/NotAccetable");
+const NotAccetable = require("../error/NotAccetable");
 
-class Serializador{
+class Serializer{
+    constructor(contentType){
+        this.contentType = contentType;
+    }
 
-    json (data)
-    {
+    json (data){
         return JSON.stringify(data);
     }
 
-    serializar (data)
-    {
+    checkType (data){
         if (this.contentType == 'application/json')
           return this.json(data);
 
@@ -17,6 +18,6 @@ class Serializador{
 }
 
 module.exports = {
-    Serializador: Serializador,
+    Serializer: Serializer,    
     acceptHeader: ['application/json']
 }

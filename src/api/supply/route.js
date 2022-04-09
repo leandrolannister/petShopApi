@@ -1,9 +1,13 @@
 const route = require('express').Router();
 const Supply = require('./Supply.js');
+const Serializer = require('../Serializar/Serializer.js').Serializer;
 
 route.get('/', async (req,res,next) => {    
   try{
-    res.status(200).json(await Supply.listar());
+    const serializer = new Serializer(req.header('Content-Type'));
+    res.status(200);    
+    res.send(
+      serializer.checkType(await Supply.listar()) );
   }catch(error){
     next(error);
     handleError(error);
@@ -14,8 +18,7 @@ route.post('/', async (req,res,next) => {
   try{
     const supply = new Supply(req.body);
     await supply.store();
-    res.status(201);
-    res.end();
+    res.status(201).end();
   }catch(error){
     next(error);      
     handleError(error);
@@ -24,9 +27,13 @@ route.post('/', async (req,res,next) => {
 
 route.get('/:id', async (req,res,next) => {
   try{
+    const serializer = new Serializer(req.header('Content-Type'));
     const {id} = req.params;
-    const supply = new Supply({id: id});
-    res.status(200).json(await supply.show());
+    const supply = new Supply({id: id});    
+    res.status(200);
+    res.send( 
+      serializer.checkType(await supply.show())
+    );
   }catch(error){
     next(error);
     handleError(error);
