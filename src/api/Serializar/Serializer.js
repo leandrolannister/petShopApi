@@ -1,19 +1,15 @@
 const NotAccetable = require("../error/NotAccetable");
 
-class Serializer{
-    constructor(contentType){
-        this.contentType = contentType;
-    }
-
+class Serializer{    
     json (data){
         return JSON.stringify(data);
     }
 
     checkType (data){
-        if (this.contentType == 'application/json')
+       if (this.contentType == 'application/json')
           return this.json(data);
 
-        throw new NotAccetable(this.contentType);  
+       throw new NotAccetable("content-type must be like application/json");  
     }
 }
 
