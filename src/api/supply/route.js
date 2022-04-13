@@ -4,10 +4,10 @@ const SupplySerializer = require('../Serializar/Supply.js');
 
 route.get('/', async (req,res,next) => {    
   try{
-    const serializer = new SupplySerializer(req.header('Content-Type'));
+    const serializer = new SupplySerializer(req.header('Content-Type'));    
     res.status(200);    
     res.send(
-      serializer.checkType(await Supply.listar()) );
+      serializer.checkType(await Supply.all()) );
   }catch(error){    
     next(error);
     handleError(error);

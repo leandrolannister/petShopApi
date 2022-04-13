@@ -1,5 +1,5 @@
 const WrongFields = require('../error/WrongFields.js');
-const table = require('./table.js');
+const Table = require('./table.js');
 
 class Supply {
    constructor({id,empresa,email,categoria,dataCriacao,dataAtualizacao,versao}){
@@ -14,7 +14,7 @@ class Supply {
 
    async store(){
        this.checkFields();
-       const store = await table.store({
+       const store = await Table.store({
            empresa: this.empresa,
            email: this.email,
            categoria: this.categoria
@@ -25,12 +25,12 @@ class Supply {
        this.versao = store.versao;      
    }
 
-   static async listar(){
-       return await table.listar();
+   static async all(){
+       return await Table.all();
    }
 
    async show(){
-       const supply = await table.show(this.id);
+       const supply = await Table.show(this.id);
        this.empresa = supply.empresa;
        this.email = supply.email;
        this.categoria = supply.categoria;
@@ -42,7 +42,7 @@ class Supply {
    }
 
    async update(){
-     await table.show(this.id);
+     await Table.show(this.id);
      const fields = ['empresa','email','categoria'];
      const data = {};
 
@@ -59,11 +59,11 @@ class Supply {
      if (Object.keys(data).length === 0)
        throw new Error('Obejct is empty');
 
-     await table.update(this.id,data);       
+     await Table.update(this.id,data);       
   }
 
    async delete(){
-       return await table.destroy(this.id);
+       return await Table.destroy(this.id);
    }
 
    checkFields(){

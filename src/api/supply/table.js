@@ -2,8 +2,8 @@ const Model = require('./model.js');
 const NotFound = require('../error/NotFound.js');
  
 module.exports = {
-    listar(){
-        return Model.findAll();
+    all(){
+        return Model.findAll({ raw: true });
     },
     store(data){
         return Model.create(data);
