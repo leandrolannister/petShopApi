@@ -19,10 +19,10 @@ class Serializer{
     filterObject (data){   
        const newData = {};
        
-       this.publicFields.forEach((field) => {         
+       this.publicFields.forEach((field) => {                    
           if (data.hasOwnProperty(field))
              newData[field] = data[field];
-       });
+       });       
        return newData;
     }
 
@@ -32,7 +32,7 @@ class Serializer{
                 return this.filterObject(items);
             });
         }else{
-            dados = this.filterObject(data);
+            data = this.filterObject(data);
         }
         return data;
     }

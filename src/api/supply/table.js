@@ -18,7 +18,7 @@ module.exports = {
        if (!supply)
          throw new NotFound;
 
-       return supply;  
+       return supply.dataValues;  
     },
     async update(id,data){
         return await Model.update(

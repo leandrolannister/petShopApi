@@ -27,7 +27,8 @@ route.post('/', async (req,res,next) => {
 
 route.get('/:id', async (req,res,next) => {
   try{
-    const serializer = new SupplySerializer(req.header('Content-Type'));
+    const serializer = new SupplySerializer(
+       req.header('Content-Type'), ['email','dataCriacao','dataAtualizacao','versao']);
     const {id} = req.params;
     const supply = new Supply({id: id});    
     res.status(200);
