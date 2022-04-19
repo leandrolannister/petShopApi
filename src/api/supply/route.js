@@ -7,7 +7,7 @@ route.get('/', async (req,res,next) => {
     const serializer = new SupplySerializer(req.header('Content-Type'));    
     res.status(200);    
     res.send(
-      serializer.checkType(await Supply.all()) );
+      serializer.serialize(await Supply.all()) );
   }catch(error){    
     next(error);
     handleError(error);
@@ -33,7 +33,7 @@ route.get('/:id', async (req,res,next) => {
     const supply = new Supply({id: id});    
     res.status(200);
     res.send( 
-      serializer.checkType(await supply.show())
+      serializer.serialize(await supply.show())
     );
   }catch(error){    
     next(error);

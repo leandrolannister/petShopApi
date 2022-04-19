@@ -6,6 +6,7 @@ const NotFound = require('./error/NotFound.js');
 const WrongFields = require('./error/WrongFields');
 const NotAccetable = require('./error/NotAccetable');
 const acceptHeader = require('./Serializar/Serializer').acceptHeader;
+const SerializerError = require('./Serializar/Serializer').SerializerError;
 
 app.use(bodyParse.json());
 
@@ -35,9 +36,15 @@ app.use((error,req,res,next) => {
 
   if (error instanceof NotAccetable)
     status = 406;
+
+  const serializer = new SerializerError(
+    req.header('Content-type')
+  );  
     
   res.status(status);
-  res.send(JSON.stringify({'message':error.message,'id':error.idError}));  
+  res.send(
+    serializer.serialize({'message':error.message,'id':error.idError})
+  );  
 
 });
 

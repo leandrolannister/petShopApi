@@ -7,7 +7,7 @@ class Serializer{
         return JSON.stringify(data);
     }
 
-    checkType (data){
+    serialize (data){
        if (this.contentType == 'application/json')
           return this.json(
              this.filter(data)
@@ -38,7 +38,18 @@ class Serializer{
     }
 }
 
+class SerializerError extends Serializer{
+    constructor(contentType, extraFields){
+       super();
+       this.contentType = contentType;    
+       this.publicFields = [
+           'id',
+           'message'].concat(extraFields || []);    
+    }
+}
+
 module.exports = {
     Serializer: Serializer,    
+    SerializerError:SerializerError,
     acceptHeader: ['application/json']
 }
