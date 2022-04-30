@@ -7,10 +7,9 @@ route.get('/', async (req,res,next) => {
     const serializer = new SupplySerializer(req.header('Content-Type'));    
     res.status(200);    
     res.send(
-      serializer.serialize(await Supply.all()) );
+      serializer.serialize(await Supply.all()) );   
   }catch(error){    
-    next(error);
-    handleError(error);
+    next(error);   
   }    
 });
 

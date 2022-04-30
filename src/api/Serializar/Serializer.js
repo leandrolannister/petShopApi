@@ -1,5 +1,5 @@
 const NotAccetable = require("../error/NotAccetable");
-const Supply = require("./Supply");
+const jsontoxml = require('jsontoxml');
 
 class Serializer{    
     
@@ -7,11 +7,29 @@ class Serializer{
         return JSON.stringify(data);
     }
 
+    xml (data){
+       let tag = this.tagSingle;
+       
+       if (Array.isArray(data)){
+         tag = this.tagPlurol;
+         data = data.map((item) => {
+            return {
+                [this.tagSingle]: item
+            }
+         });
+       }
+
+       return jsontoxml({ [tag]:data});    
+    }
+
     serialize (data){
+       data = this.filter(data); 
+
        if (this.contentType == 'application/json')
-          return this.json(
-             this.filter(data)
-          );
+         return this.json(data);
+
+       if (this.contentType == 'application/xml')
+         return this.xml(data);
 
        throw new NotAccetable("content-type must be like application/json");  
     }
@@ -45,11 +63,13 @@ class SerializerError extends Serializer{
        this.publicFields = [
            'id',
            'message'].concat(extraFields || []);    
+        this.tagSingle = "error";
+        this.tagPlurol = "errors";    
     }
 }
 
 module.exports = {
     Serializer: Serializer,    
     SerializerError:SerializerError,
-    acceptHeader: ['application/json']
+    acceptHeader: ['application/json','application/xml']
 }

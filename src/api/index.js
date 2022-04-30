@@ -18,7 +18,7 @@ app.use((req,res,next) => {
   
   if (acceptHeader.indexOf(header) == -1)
     throw new NotAccetable(`Tipo ${header} não permitido`);      
-  
+ 
   res.setHeader('Content-Type', header);
   next();
 });

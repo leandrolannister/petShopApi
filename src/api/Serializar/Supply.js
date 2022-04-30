@@ -7,7 +7,9 @@ class Supply extends Serializer{
        this.publicFields = [
            'id',
            'empresa',
-           'categoria'].concat(extraFields || []);    
+           'categoria'].concat(extraFields || []);   
+       this.tagSingle = "supply";
+       this.tagPlurol = "supplies";     
     }
 }
 module.exports = Supply;
